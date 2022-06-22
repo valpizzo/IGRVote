@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ImageBackground } from 'react-native';
+import {Text, View, ImageBackground} from 'react-native';
 import styles from '../styles.js';
 
 export default function Nav() {
@@ -8,7 +8,7 @@ export default function Nav() {
       <Text style={styles.header}>IGRVote</Text>
       <ImageBackground
         style={styles.logoBox}
-        source={ require('../data/bfrfcLogo.png')}
+        source={require('../data/bfrfcLogo.png')}
       />
     </View>
   );

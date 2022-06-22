@@ -1,5 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {Text, View} from 'react-native';
 import React from 'react';
 import Nav from './nav';
 import Bottom from './bottom';
