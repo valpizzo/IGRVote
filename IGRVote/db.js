@@ -1,16 +1,15 @@
 var firebase = require('firebase/app');
-require('firebase/database');
+const {getDatabase, ref, child, get} = require('firebase/database');
 
-// TODO: Replace the following with your app's Firebase project configuration
-// See: https://firebase.google.com/docs/web/learn-more#config-object
 const firebaseConfig = {
-  // ...
-  // The value of `databaseURL` depends on the location of the database
-  authDomain: "igrvote.firebaseapp.com",
-  // The value of `databaseURL` depends on the location of the database
-  databaseURL: "https://igrvote-default-rtdb.firebaseio.com",
-  projectId: "igrvote",
-  storageBucket: "igrvote.appspot.com",
+  apiKey: 'AIzaSyDsDj2vcNofYBrcEqdNQJa90fYq_5bGar4',
+  authDomain: 'igrvote.firebaseapp.com',
+  databaseURL: 'https://igrvote-default-rtdb.firebaseio.com',
+  projectId: 'igrvote',
+  storageBucket: 'igrvote.appspot.com',
+  messagingSenderId: '843618448629',
+  appId: '1:843618448629:web:059ebf0da265f0109601bc',
+  measurementId: 'G-VYB8YS5DWG',
 };
 
 // Initialize Firebase
@@ -18,19 +17,21 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 
 // Initialize Realtime Database and get a reference to the service
-//console.log(app);
-console.log(db);
-const db = db.getDatabase(app);
-// GET STUFF
-const ref = db.ref('openvotes');
+const go = async () => {
+  console.log('signed in');
 
-// Attach an asynchronous callback to read the data at our posts reference
-ref.on(
-  'value',
-  snapshot => {
-    console.log(snapshot.val());
-  },
-  errorObject => {
-    console.log('The read failed: ' + errorObject.name);
-  },
-);
+  const dbRef = ref(getDatabase(app));
+  get(child(dbRef, 'openvotes'))
+    .then(snapshot => {
+      if (snapshot.exists()) {
+        console.log(snapshot.val());
+      } else {
+        console.log('No data available');
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+};
+
+go();
