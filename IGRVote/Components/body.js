@@ -11,7 +11,7 @@ export default function Body() {
 
   return (
     <View style={styles.body}>
-      <Text>OPEN VOTES!</Text>
+      <Text style={{fontSize: 30, fontWeight: 'bold', color: 'white'}}>OPEN VOTES</Text>
       {openVotes.map(ballot => (
         <OpenVotesContext.Provider value={{ballot}}>
           <OpenVote key={ballot.team} />

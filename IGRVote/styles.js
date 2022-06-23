@@ -44,6 +44,29 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     margin: 10,
   },
+  buttonBox: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: '5%',
+  },
+  voteYes: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '90%',
+    backgroundColor: 'green',
+  },
+  voteNo: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'red',
+  },
+  voteAb: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'gray',
+  },
   botBar: {
     flex: 0.7,
     display: 'flex',
