@@ -13,18 +13,15 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-//console.log(firebase);
 const app = firebase.initializeApp(firebaseConfig);
 
 // Initialize Realtime Database and get a reference to the service
-const go = async () => {
-  console.log('signed in');
-
+const getOpenVotes = async () => {
   const dbRef = ref(getDatabase(app));
-  get(child(dbRef, 'openvotes'))
+  return get(child(dbRef, 'openvotes'))
     .then(snapshot => {
       if (snapshot.exists()) {
-        console.log(snapshot.val());
+        return snapshot.val();
       } else {
         console.log('No data available');
       }
@@ -34,4 +31,29 @@ const go = async () => {
     });
 };
 
-go();
+const getMembers = async username => {
+  const dbRef = ref(getDatabase(app));
+  return get(child(dbRef, 'members'))
+    .then(snapshot => {
+      if (snapshot.exists()) {
+        console.log(snapshot.val());
+        return snapshot.val();
+      } else {
+        console.log('No data available');
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+};
+
+// const getMember = async username => {
+//   const dbRef = ref(getDatabase(app));
+//   return get(child(dbRef, 'members'))
+//     .then(())
+// };
+
+getMembers();
+
+module.exports = getOpenVotes;
+module.exports = getMembers;

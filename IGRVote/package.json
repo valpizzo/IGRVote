@@ -6,12 +6,17 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "server-dev": "nodemon --watch server server/server.js",
     "test": "jest",
     "lint": "eslint ."
   },
   "dependencies": {
     "@react-native-firebase/app": "^15.0.0",
+    "axios": "^0.27.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
     "firebase": "^9.8.3",
+    "puppeteer": "^15.0.0",
     "react": "18.0.0",
     "react-native": "0.69.0"
   },

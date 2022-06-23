@@ -7,8 +7,8 @@ export default function Body() {
   const {ballot} = useContext(OpenVotesContext);
   return (
     <View style={styles.openVote}>
-      <Text style={styles.aTitle}>{ballot.team}</Text>
-      <Text>{ballot.info}</Text>
+      <Text style={styles.aTitle}>{ballot.Applicant}</Text>
+      <Text>{ballot.Info}</Text>
       <VoteButtons />
     </View>
   );

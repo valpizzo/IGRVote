@@ -1,13 +1,10 @@
-
- [
+[
   {
-    "name": "Baltimore Flamingos RFC",
-    "username": "bfrfc",
-    "password": "igr123"
+    "Applicant": "New Team",
+    "Info": "We are really cool plz accept"
   },
   {
-    "name": "Boston Ironsides",
-    "username": "birfc",
-    "password": "igr456"
+    "Applicant": "Better Team",
+    "Info": "We are mean"
   }
 ]

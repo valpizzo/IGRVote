@@ -13,12 +13,12 @@ const teams = [
 
 const openvotesData = [
   {
-    team: 'New Team',
-    info: 'We are really cool plz accept',
+    Applicant: 'New Team',
+    Info: 'We are really cool plz accept',
   },
   {
-    team: 'Better Team',
-    info: 'We are mean',
+    Applicant: 'Better Team',
+    Info: 'We are mean',
   },
 ];
 
