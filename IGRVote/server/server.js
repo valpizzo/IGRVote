@@ -3,7 +3,7 @@ const axios = require('axios');
 const express = require('express');
 const path = require('path');
 var cors = require('cors');
-const getOpenVotes = require('./db');
+const {getOpenVotes, getMembers} = require('./db');
 const app = express();
 // Middleware
 app.use(express.json());
@@ -29,8 +29,7 @@ app.get('/votes', async (req, res) => {
   res.send(votes);
 });
 
-app.get('/members/:username', async (req, res) => {
-  const members = await getOpenVotes();
-  console.log(votes);
-  res.send(votes);
+app.get('/members', async (req, res) => {
+  const members = await getMembers();
+  res.send(members);
 });

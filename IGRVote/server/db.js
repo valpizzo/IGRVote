@@ -18,6 +18,7 @@ const app = firebase.initializeApp(firebaseConfig);
 // Initialize Realtime Database and get a reference to the service
 const getOpenVotes = async () => {
   const dbRef = ref(getDatabase(app));
+
   return get(child(dbRef, 'openvotes'))
     .then(snapshot => {
       if (snapshot.exists()) {
@@ -53,7 +54,5 @@ const getMembers = async username => {
 //     .then(())
 // };
 
-getMembers();
-
-module.exports = getOpenVotes;
-module.exports = getMembers;
+module.exports.getOpenVotes = getOpenVotes;
+module.exports.getMembers = getMembers;

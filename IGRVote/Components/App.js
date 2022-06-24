@@ -9,11 +9,12 @@ import styles from '../styles';
 export const SignInContext = React.createContext();
 
 export default function App() {
-  const [signedIn, setSignIn] = useState(false);
+  const [signedIn, setSignIn] = useState(true);
+  const [teamInfo, setInfo] = useState('');
 
   return (
     <View style={styles.container}>
-      <SignInContext.Provider value={{signedIn, setSignIn}}>
+      <SignInContext.Provider value={{signedIn, setSignIn, teamInfo, setInfo}}>
         <Nav />
         {!signedIn ? <SignOnScreen /> : <Body />}
         <Bottom />

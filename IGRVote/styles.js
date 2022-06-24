@@ -59,22 +59,25 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   openVote: {
-    height: 100,
-    width: '80%',
+    left: 20,
+    height: 150,
+    width: '85%',
     backgroundColor: 'white',
     margin: 10,
+    padding: '5%',
+  },
+  ballotInfo: {
+    overflow: 'hidden',
   },
   buttonBox: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: '5%',
   },
   voteYes: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    height: '90%',
     backgroundColor: 'green',
   },
   voteNo: {
@@ -92,8 +95,15 @@ export default StyleSheet.create({
     display: 'flex',
     height: '20%',
     backgroundColor: '#427EC0',
+    alignItems: 'center',
   },
   aTitle: {
     fontSize: 30,
+  },
+  footer: {
+    fontSize: 30,
+    color: 'white',
+    fontWeight: 'bold',
+    justifyContent: 'center',
   },
 });

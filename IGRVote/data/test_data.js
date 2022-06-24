@@ -18,7 +18,7 @@ const openvotesData = [
   },
   {
     Applicant: 'Better Team',
-    Info: 'We are mean',
+    Info: 'We are mean weeeee',
   },
 ];
 

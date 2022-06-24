@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, ScrollView} from 'react-native';
 import styles from '../styles.js';
 import OpenVote from './OpenVote';
 import {openvotesData} from '../data/test_data';
@@ -12,7 +12,7 @@ export default function Body() {
 
   useEffect(() => {
     axios
-      .get('http://192.168.3.160:3000/votes')
+      .get('http://192.168.0.25:3000/votes')
       .then(data => {
         setOpenVotes(data.data);
       })
@@ -24,11 +24,13 @@ export default function Body() {
   return (
     <View style={styles.body}>
       <Text style={{fontSize: 30, fontWeight: 'bold', color: 'white'}}>OPEN VOTES</Text>
-      {openVotes.map(ballot => (
-        <OpenVotesContext.Provider value={{ballot}}>
-          <OpenVote key={ballot.Applicant} />
-        </OpenVotesContext.Provider>
-      ))}
+      <ScrollView>
+        {openVotes.map(ballot => (
+          <OpenVotesContext.Provider value={{ballot}}>
+            <OpenVote key={ballot.Applicant} />
+          </OpenVotesContext.Provider>
+        ))}
+      </ScrollView>
     </View>
   );
 }
