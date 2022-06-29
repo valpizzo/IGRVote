@@ -64,6 +64,7 @@ async function getTeamNames() {
       user += word[0];
     });
     teams[i] = {
+      id: i,
       name: teams[i],
       username: user,
       password: teams[i].split(' ')[0],

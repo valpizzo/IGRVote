@@ -19,21 +19,13 @@ export default function SignOnScreen() {
   };
   const validateSignOn = () => {
     axios
-      .get('http://192.168.0.25:3000/members')
+      .get(`http://192.168.0.25:3000/members/${username}`)
       .then(data => {
-        for (var i = 0; i < data.data.length; i++) {
-          if (
-            data.data[i].username === username &&
-            data.data[i].password === pw
-          ) {
-            setInfo(data.data[i].name);
-            setSignIn(!signedIn);
-            return;
-          }
-        }
-        setFail(true);
+        setInfo(data.data);
+        setSignIn(!signedIn);
       })
       .catch(err => {
+        setFail(true);
         console.log('Error getting members:', err);
       });
   };

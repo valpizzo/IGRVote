@@ -1,58 +1,77 @@
-var firebase = require('firebase/app');
-const {getDatabase, ref, child, get} = require('firebase/database');
+const mongoose = require('mongoose');
+const teamInfo = require('../data/teams');
+const {openvotesData} = require('../data/test_data');
+main().catch(err => console.log(err));
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyDsDj2vcNofYBrcEqdNQJa90fYq_5bGar4',
-  authDomain: 'igrvote.firebaseapp.com',
-  databaseURL: 'https://igrvote-default-rtdb.firebaseio.com',
-  projectId: 'igrvote',
-  storageBucket: 'igrvote.appspot.com',
-  messagingSenderId: '843618448629',
-  appId: '1:843618448629:web:059ebf0da265f0109601bc',
-  measurementId: 'G-VYB8YS5DWG',
-};
+async function main() {
+  await mongoose.connect('mongodb://localhost/igrvote');
+}
 
-// Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
+const membersSchema = new mongoose.Schema({
+  id: {
+    type: Number,
+    unique: true,
+  },
+  name: String,
+  username: String,
+  password: String,
+});
 
-// Initialize Realtime Database and get a reference to the service
+const voteSchema = new mongoose.Schema({
+  id: {
+    type: Number,
+    unique: true,
+  },
+  Applicant: String,
+  Info: String,
+  Yes: Number,
+  No: Number,
+  Abstain: Number,
+});
+
+const Member = mongoose.model('Member', membersSchema);
+const OpenVote = mongoose.model('OpenVote', voteSchema);
+//Member.insertMany(teamInfo.teamInfo);
+//OpenVote.insertMany(openvotesData);
+
+// GET all open votes
 const getOpenVotes = async () => {
-  const dbRef = ref(getDatabase(app));
-
-  return get(child(dbRef, 'openvotes'))
-    .then(snapshot => {
-      if (snapshot.exists()) {
-        return snapshot.val();
-      } else {
-        console.log('No data available');
-      }
-    })
-    .catch(error => {
-      console.error(error);
-    });
+  return OpenVote.find();
 };
 
+// GET one member for login validation
 const getMembers = async username => {
-  const dbRef = ref(getDatabase(app));
-  return get(child(dbRef, 'members'))
-    .then(snapshot => {
-      if (snapshot.exists()) {
-        console.log(snapshot.val());
-        return snapshot.val();
-      } else {
-        console.log('No data available');
-      }
-    })
-    .catch(error => {
-      console.error(error);
-    });
+  return Member.findOne({username: username});
 };
 
-// const getMember = async username => {
-//   const dbRef = ref(getDatabase(app));
-//   return get(child(dbRef, 'members'))
-//     .then(())
-// };
+// POST new vote for an open vote
+const updateVotesCast = async (id, option, newCount) => {
+  if (option === 'Yes') {
+    return OpenVote.updateOne({id: id}, {Yes: newCount});
+  } else if (option === 'No') {
+    return OpenVote.updateOne({id: id}, {No: newCount});
+  } else {
+    return OpenVote.updateOne({id: id}, {Abstain: newCount});
+  }
+};
+
+// POST new ballot
+const insertBallot = async (applicant, info) => {
+  let nextId = await OpenVote.find().sort({id: -1}).limit(1);
+  nextId = nextId[0].id + 1;
+  console.log(nextId);
+  const newOpenVote = new OpenVote({
+    id: nextId,
+    Applicant: applicant,
+    Info: info,
+    Yes: 0,
+    No: 0,
+    Abstain: 0,
+  });
+  newOpenVote.save();
+};
 
 module.exports.getOpenVotes = getOpenVotes;
 module.exports.getMembers = getMembers;
+module.exports.updateVotesCast = updateVotesCast;
+module.exports.insertBallot = insertBallot;

@@ -3,7 +3,12 @@ const axios = require('axios');
 const express = require('express');
 const path = require('path');
 var cors = require('cors');
-const {getOpenVotes, getMembers} = require('./db');
+const {
+  getOpenVotes,
+  getMembers,
+  updateVotesCast,
+  insertBallot,
+} = require('./db');
 const app = express();
 // Middleware
 app.use(express.json());
@@ -25,11 +30,22 @@ app.get('/test', (req, res) => {
 
 app.get('/votes', async (req, res) => {
   const votes = await getOpenVotes();
-  console.log(votes);
   res.send(votes);
 });
 
-app.get('/members', async (req, res) => {
-  const members = await getMembers();
-  res.send(members);
+app.get('/members/:username', async (req, res) => {
+  const members = await getMembers(req.params.username);
+  res.send(members.name);
+});
+
+// POST Routes
+
+app.post('/castvote', async (req, res) => {
+  updateVotesCast(req.body.id, req.body.option, req.body.newCount);
+  res.send('Vote has been cast');
+});
+
+app.post('/addballot', async (req, res) => {
+  insertBallot(req.body.Applicant, req.body.Info);
+  res.send('Ballot inserted');
 });

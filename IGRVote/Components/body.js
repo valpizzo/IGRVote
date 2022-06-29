@@ -1,14 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {Text, View, ScrollView} from 'react-native';
 import styles from '../styles.js';
 import OpenVote from './OpenVote';
-import {openvotesData} from '../data/test_data';
+import Form from './Form';
+import {SignInContext} from './App';
 import axios from 'axios';
 
 export const OpenVotesContext = React.createContext();
 
 export default function Body() {
-  const [openVotes, setOpenVotes] = useState(openvotesData);
+  const {form, setForm, openVotes, setOpenVotes} = useContext(SignInContext);
 
   useEffect(() => {
     axios
@@ -19,15 +20,16 @@ export default function Body() {
       .catch(err => {
         console.log('Error getting open votes:', err);
       });
-  }, []);
+  }, [setOpenVotes]);
 
   return (
     <View style={styles.body}>
+      {form ? <Form /> : <></>}
       <Text style={{fontSize: 30, fontWeight: 'bold', color: 'white'}}>OPEN VOTES</Text>
-      <ScrollView>
+      <ScrollView style={styles.scrollVote}>
         {openVotes.map(ballot => (
-          <OpenVotesContext.Provider value={{ballot}}>
-            <OpenVote key={ballot.Applicant} />
+          <OpenVotesContext.Provider key={ballot.id} value={{ballot}}>
+            <OpenVote key={ballot.id} />
           </OpenVotesContext.Provider>
         ))}
       </ScrollView>
